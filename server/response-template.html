@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>APITeam Echo</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  <style type="text/css">
+    body {
+      margin: 5px 20px;
+      font-family: Inter, sans-serif;
+    }
+
+    footer {
+      margin: 25px 0 0 0;
+      padding: 8px 0;
+      text-align: center;
+      border-top: 1px solid #E6E8F0;
+      font-size: 12px;
+      color: #65748B;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>APITeam Echo</h1>
+    <pre>{{.PreSummary}}</pre>
+    <h2>Request</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <tbody>
+          {{range .Request}}
+          <tr>
+            <td>{{.Key}}</td>
+            <td>{{.Value}}</td>
+          </tr>
+        </tbody>
+        {{end}}
+      </table>
+    </div>
+    <h2>URL Parameters</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range .URLParameters}}
+          <tr>
+            <td>{{.Key}}</td>
+            <td>
+              {{.Value}}
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </div>
+    <h2>Headers</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range .Headers}}
+          <tr>
+            <td>{{.Key}}</td>
+            <td>
+              {{.Value}}
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </div>
+    <h2>Cookies</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range .Cookies}}
+          <tr>
+            <td>{{.Key}}</td>
+            <td>
+              {{.Value}}
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </div>
+    <h2>Body</h2>
+    {{if .Body.Valid}}
+    <pre>{{.Body.String}}</pre>
+    {{else}}
+    <em>No body</em>
+    {{end}}
+    <footer>
+      <p>Powered by <a href="
+        https://apiteam.cloud" target="_blank">APITeam</a> - Design, build and scale your APIs collaboratively.
+      </p>
+    </footer>
+  </div>
+</body>
+
+</html>

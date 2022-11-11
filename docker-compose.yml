@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  gateway:
+    env_file: .env
+    image: apiteamdevops/echo-server-gateway:latest
+    volumes:
+      - gateway:/etc/resty-auto-ssl
+    restart: always
+    environment:
+      ALLOWED_DOMAINS: echo.apiteam.cloud
+    ports:
+      - "80:80"
+      - "443:443"
+  echo:
+    image: apiteamdevops/echo-server:latest
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  gateway:
+    driver: local
