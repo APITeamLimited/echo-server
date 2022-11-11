@@ -30,7 +30,11 @@ func determineRequestInfo(req *http.Request) (RequestInfo, error) {
 		{Key: "Method", Value: req.Method},
 		{Key: "URL", Value: req.URL.String()},
 		{Key: "Proto", Value: req.Proto},
-		{Key: "Host", Value: req.Host},
+	}
+
+	connectingIP := req.Header.Get("Cf-Connecting-Ip")
+	if req.Header.Get("Cf-Connecting-Ip") != "" {
+		requestInfo.Request = append(requestInfo.Request, InfoPair{Key: "Client IP", Value: connectingIP})
 	}
 
 	requestInfo.URLParameters = extractQueryParams(req)
