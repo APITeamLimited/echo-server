@@ -8,12 +8,20 @@ import (
 
 func outputJSON(w http.ResponseWriter, requestInfo RequestInfo) {
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(requestInfo)
+	err := json.NewEncoder(w).Encode(requestInfo)
+
+	if err != nil {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
 }
 
 var htmlTemplate = template.Must(template.ParseFiles("server/response-template.html"))
 
 func outputHTML(w http.ResponseWriter, requestInfo RequestInfo) {
 	w.Header().Set("Content-Type", "text/html")
-	htmlTemplate.Execute(w, requestInfo)
+	err := htmlTemplate.Execute(w, requestInfo)
+
+	if err != nil {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
 }

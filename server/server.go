@@ -61,13 +61,6 @@ func Run() {
 func handle(w http.ResponseWriter, req *http.Request) {
 	accept := getAcceptType(req)
 
-	if accept == "application/json" || accept == "text/html" || accept == "*/*" {
-		w.WriteHeader(http.StatusOK)
-	} else {
-		w.WriteHeader(http.StatusNotAcceptable)
-		return
-	}
-
 	requestInfo, err := determineRequestInfo(req)
 	if err != nil {
 		// If error says that body is too large, return 413
