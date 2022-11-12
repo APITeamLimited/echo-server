@@ -24,16 +24,17 @@ func getAcceptType(req *http.Request) string {
 		if item == "text/html" {
 			return "text/html"
 		}
-	}
 
-	// If any item application/json, return application/json
-	for _, item := range accept {
 		if item == "application/json" {
 			return "application/json"
 		}
+
+		if item == "*/*" {
+			return "text/html"
+		}
 	}
 
-	// For the rest of the cases, return empty string
+	// For the rest of the cases, return empty string (invalid type)
 	return ""
 }
 
