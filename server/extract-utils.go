@@ -10,6 +10,33 @@ import (
 	"gopkg.in/guregu/null.v4"
 )
 
+func getAcceptType(req *http.Request) string {
+	// Sllit the Accept header into an array of strings
+	accept := strings.Split(req.Header.Get("Accept"), ",")
+
+	// If the Accept header is empty, return the default content type
+	if accept[0] == "" {
+		return "text/html"
+	}
+
+	// If any item text/html, return text/html
+	for _, item := range accept {
+		if item == "text/html" {
+			return "text/html"
+		}
+	}
+
+	// If any item application/json, return application/json
+	for _, item := range accept {
+		if item == "application/json" {
+			return "application/json"
+		}
+	}
+
+	// For the rest of the cases, return empty string
+	return ""
+}
+
 func extractQueryParams(req *http.Request) []InfoPair {
 	// Extract and add URL parameters to responseInfo
 
@@ -86,52 +113,4 @@ func extractBody(req *http.Request) (null.String, error) {
 			Valid:  stringValue != "",
 		},
 	}, nil
-}
-
-func getAcceptType(req *http.Request) string {
-	// SPlit the Accept header into an array of strings
-	accept := strings.Split(req.Header.Get("Accept"), ",")
-
-	// If the Accept header is empty, return the default content type
-	if len(accept) == 0 {
-		return "text/html"
-	}
-
-	// If first item is text/html, return text/html
-	if accept[0] == "text/html" {
-		return "text/html"
-	}
-
-	// If first item is application/json, return application/json
-	if accept[0] == "application/json" {
-		return "application/json"
-	}
-
-	// If first item is */*, return text/html
-	if accept[0] == "*/*" {
-		return "text/html"
-	}
-
-	// If any item text/html, return text/html
-	for _, item := range accept {
-		if item == "text/html" {
-			return "text/html"
-		}
-	}
-
-	// If any item application/json, return application/json
-	for _, item := range accept {
-		if item == "application/json" {
-			return "application/json"
-		}
-	}
-
-	// If any item */*, return text/html
-	for _, item := range accept {
-		if item == "*/*" {
-			return "text/html"
-		}
-	}
-
-	return ""
 }
