@@ -7,6 +7,8 @@ import (
 	"gopkg.in/guregu/null.v4"
 )
 
+const Port = 8080
+
 type InfoPair struct {
 	Key   string
 	Value string
@@ -19,6 +21,11 @@ type RequestInfo struct {
 	Headers       []InfoPair  `json:"headers"`
 	Cookies       []InfoPair  `json:"cookies"`
 	Body          null.String `json:"body"`
+}
+
+func Run() {
+	http.HandleFunc("/", handle)
+	http.ListenAndServe(fmt.Sprintf(":%d", Port), nil)
 }
 
 func determineRequestInfo(req *http.Request) (RequestInfo, error) {
@@ -51,11 +58,6 @@ func determineRequestInfo(req *http.Request) (RequestInfo, error) {
 	requestInfo.Body = body
 
 	return requestInfo, nil
-}
-
-func Run() {
-	http.HandleFunc("/", handle)
-	http.ListenAndServe(":8080", nil)
 }
 
 func handle(w http.ResponseWriter, req *http.Request) {

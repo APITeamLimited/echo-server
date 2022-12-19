@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("APITeam Ping Server Starting...")
+	fmt.Printf("APITeam Ping Server Starting on port %d...\n", server.Port)
 
 	server.Run()
 }
